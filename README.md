@@ -1,6 +1,6 @@
 ![lint](https://github.com/floydya/drf-extended/actions/workflows/lint.yml/badge.svg)
 ![deploy](https://github.com/floydya/drf-extended/actions/workflows/deploy.yml/badge.svg)
-![pypi](https://badge.fury.io/py/tensorflow.svg)
+![pypi](https://badge.fury.io/py/drf-extended.svg)
 
 # Django Model Serializer package  
 
