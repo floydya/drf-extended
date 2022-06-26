@@ -1,8 +1,8 @@
 ![lint](https://github.com/floydya/drf-extended/actions/workflows/lint.yml/badge.svg)
 ![deploy](https://github.com/floydya/drf-extended/actions/workflows/deploy.yml/badge.svg)
-![pypi](https://badge.fury.io/py/tensorflow.svg)
+![pypi](https://badge.fury.io/py/drf-extended.svg)
 
-# Django Model Serializer package  
+# DRF extended  
 
 This package provides ability for developers to create serializers directly from models.  
 
@@ -11,7 +11,7 @@ This package provides ability for developers to create serializers directly from
 ### Install using pip:  
 
 ```bash  
-pip install django-modelserializer  
+pip install drf-extended
 ```  
 
 ## Usage  
@@ -21,11 +21,10 @@ pip install django-modelserializer
 ```python  
 from django.db import models
 
-from django_modelserializer import APIMixin, APIModel, APIField
+from drf_extended import APIMixin, APIModel, APIField
 from rest_framework import serializers
 
 class MyParentModel(APIMixin, models.Model):
-    """You can inherit from APIMixin that provides serializer constructor method."""
     name = models.CharField(max_length=64)
     description = models.TextField()
 
@@ -34,8 +33,7 @@ class MyParentModel(APIMixin, models.Model):
 		APIField('description'),
 	]
 
-class MyModel(APIModel):
-    """You can inherit from APIModel, that is inherited from APIMixin and models.Model"""
+class MyModel(APIMixin, models.Model):
     title = models.CharField(max_length=40)
     parent = models.ForeignKey(MyParentModel, on_delete=models.CASCADE)
   

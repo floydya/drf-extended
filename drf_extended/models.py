@@ -1,6 +1,11 @@
-from typing import Type, List, Dict, Union, Literal
+from functools import lru_cache
+from typing import Type, List, Dict, Union
 
-from django.db import models
+try:
+    from typing import Literal
+except ImportError:
+    from typing_extensions import Literal
+
 from django.db.models import ManyToManyField, ForeignKey
 from rest_framework.serializers import Serializer
 
@@ -12,6 +17,7 @@ class APIMixin:
     api_fields: List[APIField] = []
 
     @classmethod
+    @lru_cache(maxsize=None)
     def get_serializer_class(
             cls: Type['APIMixin']
     ) -> Type[BaseSerializerMixin]:
@@ -53,9 +59,3 @@ class APIMixin:
             **child_serializers,
             'Meta': Meta
         })
-
-
-class APIModel(APIMixin, models.Model):
-
-    class Meta:
-        abstract = True

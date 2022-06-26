@@ -3,4 +3,10 @@ __pycache__
 dist
 *.egg-info
 .venv
+venv
 .idea
+.pytest_cache
+build
+.coverage
+coverage.xml
+htmlcov
