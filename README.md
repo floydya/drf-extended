@@ -8,6 +8,11 @@ This package provides ability for developers to create serializers directly from
 
 ## Installation  
 
+### Supported:
+* Python 3.7+
+* Django 3.0+
+* DRF 3+
+
 ### Install using pip:  
 
 ```bash  
@@ -28,10 +33,10 @@ class MyParentModel(APIMixin, models.Model):
     name = models.CharField(max_length=64)
     description = models.TextField()
 
-	api_fields = [
-		APIField('name'),
-		APIField('description'),
-	]
+    api_fields = [
+        APIField('name'),
+        APIField('description'),
+    ]
 
 class MyModel(APIMixin, models.Model):
     title = models.CharField(max_length=40)
@@ -41,7 +46,7 @@ class MyModel(APIMixin, models.Model):
         # Plain serialize title as rest_framework does it out of the box.
         APIField('title'),
         # Serializer from foreign key field's model will be calculated automatically,
-        # if ForeingKey related model is subclass of APIMixin(or APIModel).
+        # if ForeingKey related model is subclass of APIMixin.
         APIField('parent'),
         # You can specify custom serializer for field.
         APIField('parent_id', serializers.IntegerField(source='parent.id')),
@@ -87,4 +92,13 @@ class MyModelRetrieveView(RetrieveAPIView):
     serializer_class = MyModel.get_serializer_class()
     queryset = MyModel.objects.select_related('parent').all()
 
+```
+
+#### Using such serializer in views allows us to get only those fields that we specify in the request query params with key `fields`.
+E.g. `GET /some-model/<pk>/?fields=id,parent_id`, results us:
+```json
+{
+    "id": <pk>,
+    "parent_id": <pk>
+}
 ```
